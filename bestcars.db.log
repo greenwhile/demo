@@ -1,0 +1,3 @@
+/*C12*/SET SCHEMA PUBLIC
+drop table product if exists
+create table product (product_code varchar(255) not null, buy_price numeric(19,2), msrp numeric(19,2), product_description varchar(255), product_line varchar(255), product_name varchar(255), product_scale varchar(255), product_vendor varchar(255), quantity_in_stock smallint not null, primary key (product_code))
