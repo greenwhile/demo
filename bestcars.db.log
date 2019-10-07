@@ -1,3 +1,6 @@
-/*C12*/SET SCHEMA PUBLIC
+/*C3*/SET SCHEMA PUBLIC
 drop table product if exists
 create table product (product_code varchar(255) not null, buy_price numeric(19,2), msrp numeric(19,2), product_description varchar(255), product_line varchar(255), product_name varchar(255), product_scale varchar(255), product_vendor varchar(255), quantity_in_stock smallint not null, primary key (product_code))
+INSERT INTO PRODUCT VALUES('S10_1841',123.89,7933.00,'This replica features working kickstand, front suspension, gear-shift lever, footbrake lever','Motorcycles','1969 Harley Davidson Ultimate Chopper','1:10','Min Lin Diecast',7933)
+INSERT INTO PRODUCT VALUES('S10_1473',783.47,8754.00,'This description description description','Motorcycles','1969 Harley Davidson Ultimate Chopper','1:10','Min Lin Diecast',7863)
+COMMIT

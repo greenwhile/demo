@@ -1,13 +1,12 @@
-package com.example.demo;
+package com.example.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-public class Product {
+@Table(name = "products")
+public class Product implements Serializable {
     @Id
     private String productCode;
     private BigDecimal buyPrice;
@@ -24,9 +23,9 @@ public class Product {
 //    private List<OrderDetail> orderdetails;
 
     //bi-directional many-to-one association to Productline
-//    @ManyToOne
-//    @JoinColumn(name="productLine", insertable=false, updatable=false)
-//    private ProductLine category;
+    @ManyToOne
+    @JoinColumn(name="productLine", insertable=false, updatable=false)
+    private ProductLine category;
 
     public Product() {
     }
@@ -137,14 +136,13 @@ public class Product {
         this.productLine = productLine;
     }
 
-//    public ProductLine getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(ProductLine category) {
-//        this.category = category;
-//    }
+    public ProductLine getCategory() {
+        return category;
+    }
 
+    public void setCategory(ProductLine category) {
+        this.category = category;
+    }
 
     @Override
     public String toString() {
