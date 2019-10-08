@@ -1,14 +1,18 @@
 package com.example.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="productlines")
-public class ProductLine implements Serializable {
+public class ProductLine {
 
     @Id
     private String productLine;
@@ -22,13 +26,9 @@ public class ProductLine implements Serializable {
     private byte[] file;
 
     //bi-directional many-to-one association to Product
-    @OneToMany(mappedBy="category", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="category", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
     private List<Product> products;
-
-//    @ManyToOne
-//    @JoinColumn(name = "userNumber", insertable=false, updatable=false)
-//    private User user;
-
 
     public ProductLine() {
     }
@@ -41,7 +41,7 @@ public class ProductLine implements Serializable {
     }
 
     public String getProductLine() {
-        return this.productLine;
+        return productLine;
     }
 
     public void setProductLine(String productLine) {
@@ -49,7 +49,7 @@ public class ProductLine implements Serializable {
     }
 
     public String getHtmlDescription() {
-        return this.htmlDescription;
+        return htmlDescription;
     }
 
     public void setHtmlDescription(String htmlDescription) {
@@ -65,25 +65,20 @@ public class ProductLine implements Serializable {
     }
 
     public List<Product> getProducts() {
-        return this.products;
+        return products;
     }
 
     public void setProducts(List<Product> products) {
         this.products = products;
     }
 
-    public Product addProduct(Product product) {
-        getProducts().add(product);
-        product.setCategory(this);
-
-        return product;
+    @Override
+    public String toString() {
+        return "ProductLine{" +
+                "productLine='" + productLine + '\'' +
+                ", htmlDescription='" + htmlDescription + '\'' +
+                ", file=" + Arrays.toString(file) +
+                ", products=" + products +
+                '}';
     }
-
-    public Product removeProduct(Product product) {
-        getProducts().remove(product);
-        product.setCategory(null);
-
-        return product;
-    }
-
 }

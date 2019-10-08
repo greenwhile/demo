@@ -22,8 +22,8 @@ public class ProductLineController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public Integer getAll(){
-        return productLineRepository.findAll().size();
+    public List<ProductLine> getAll(){
+        return productLineRepository.findAll();
     }
 
 }

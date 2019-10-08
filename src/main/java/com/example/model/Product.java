@@ -1,12 +1,17 @@
 package com.example.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products")
-public class Product implements Serializable {
+public class Product {
     @Id
     private String productCode;
     private BigDecimal buyPrice;
@@ -19,8 +24,9 @@ public class Product implements Serializable {
     private short quantityInStock;
 
     //bi-directional many-to-one association to Orderdetail
-//    @OneToMany(mappedBy="product", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-//    private List<OrderDetail> orderdetails;
+    @OneToMany(mappedBy="product", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
+    private List<OrderDetail> orderdetails;
 
     //bi-directional many-to-one association to Productline
     @ManyToOne
@@ -43,7 +49,7 @@ public class Product implements Serializable {
     }
 
     public String getProductCode() {
-        return this.productCode;
+        return productCode;
     }
 
     public void setProductCode(String productCode) {
@@ -51,7 +57,7 @@ public class Product implements Serializable {
     }
 
     public BigDecimal getBuyPrice() {
-        return this.buyPrice;
+        return buyPrice;
     }
 
     public void setBuyPrice(BigDecimal buyPrice) {
@@ -59,7 +65,7 @@ public class Product implements Serializable {
     }
 
     public BigDecimal getMsrp() {
-        return this.msrp;
+        return msrp;
     }
 
     public void setMsrp(BigDecimal msrp) {
@@ -67,7 +73,7 @@ public class Product implements Serializable {
     }
 
     public String getProductDescription() {
-        return this.productDescription;
+        return productDescription;
     }
 
     public void setProductDescription(String productDescription) {
@@ -75,58 +81,12 @@ public class Product implements Serializable {
     }
 
     public String getProductName() {
-        return this.productName;
+        return productName;
     }
 
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
-    public String getProductScale() {
-        return this.productScale;
-    }
-
-    public void setProductScale(String productScale) {
-        this.productScale = productScale;
-    }
-
-    public String getProductVendor() {
-        return this.productVendor;
-    }
-
-    public void setProductVendor(String productVendor) {
-        this.productVendor = productVendor;
-    }
-
-    public short getQuantityInStock() {
-        return this.quantityInStock;
-    }
-
-    public void setQuantityInStock(short quantityInStock) {
-        this.quantityInStock = quantityInStock;
-    }
-
-//    public List<OrderDetail> getOrderdetails() {
-//        return this.orderdetails;
-//    }
-//
-//    public void setOrderdetails(List<OrderDetail> orderdetails) {
-//        this.orderdetails = orderdetails;
-//    }
-//
-//    public OrderDetail addOrderdetail(OrderDetail orderdetail) {
-//        getOrderdetails().add(orderdetail);
-//        orderdetail.setProduct(this);
-//
-//        return orderdetail;
-//    }
-//
-//    public OrderDetail removeOrderdetail(OrderDetail orderdetail) {
-//        getOrderdetails().remove(orderdetail);
-//        orderdetail.setProduct(null);
-//
-//        return orderdetail;
-//    }
 
     public String getProductLine() {
         return productLine;
@@ -134,6 +94,38 @@ public class Product implements Serializable {
 
     public void setProductLine(String productLine) {
         this.productLine = productLine;
+    }
+
+    public String getProductScale() {
+        return productScale;
+    }
+
+    public void setProductScale(String productScale) {
+        this.productScale = productScale;
+    }
+
+    public String getProductVendor() {
+        return productVendor;
+    }
+
+    public void setProductVendor(String productVendor) {
+        this.productVendor = productVendor;
+    }
+
+    public short getQuantityInStock() {
+        return quantityInStock;
+    }
+
+    public void setQuantityInStock(short quantityInStock) {
+        this.quantityInStock = quantityInStock;
+    }
+
+    public List<OrderDetail> getOrderdetails() {
+        return orderdetails;
+    }
+
+    public void setOrderdetails(List<OrderDetail> orderdetails) {
+        this.orderdetails = orderdetails;
     }
 
     public ProductLine getCategory() {
@@ -145,8 +137,32 @@ public class Product implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return quantityInStock == product.quantityInStock &&
+                Objects.equals(productCode, product.productCode) &&
+                Objects.equals(buyPrice, product.buyPrice) &&
+                Objects.equals(msrp, product.msrp) &&
+                Objects.equals(productDescription, product.productDescription) &&
+                Objects.equals(productName, product.productName) &&
+                Objects.equals(productLine, product.productLine) &&
+                Objects.equals(productScale, product.productScale) &&
+                Objects.equals(productVendor, product.productVendor) &&
+                Objects.equals(orderdetails, product.orderdetails) &&
+                Objects.equals(category, product.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productCode, buyPrice, msrp, productDescription, productName, productLine, productScale, productVendor, quantityInStock, orderdetails, category);
+    }
+
+    @Override
     public String toString() {
-        return "productCode='" + productCode + '\'' +
+        return "Product{" +
+                "productCode='" + productCode + '\'' +
                 ", buyPrice=" + buyPrice +
                 ", msrp=" + msrp +
                 ", productDescription='" + productDescription + '\'' +
@@ -154,6 +170,9 @@ public class Product implements Serializable {
                 ", productLine='" + productLine + '\'' +
                 ", productScale='" + productScale + '\'' +
                 ", productVendor='" + productVendor + '\'' +
-                ", quantityInStock=" + quantityInStock;
+                ", quantityInStock=" + quantityInStock +
+                ", orderdetails=" + orderdetails +
+                ", category=" + category +
+                '}';
     }
 }

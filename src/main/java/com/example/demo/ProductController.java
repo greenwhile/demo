@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.model.Product;
+import com.example.repository.ProductLineRepository;
 import com.example.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/find/{productCode}", method = RequestMethod.GET)
-    public Product findByName(@PathVariable String productCode){
+    public Product findByProductCode(@PathVariable String productCode){
         return productRepository.findByProductCode(productCode);
     }
 
