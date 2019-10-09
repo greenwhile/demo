@@ -6,8 +6,10 @@ import com.example.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -18,14 +20,21 @@ public class ProductController {
     @Autowired
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
-//        products = new ArrayList<Product>();
-//        products.add(new Product("S10_1841", new BigDecimal(123.89), new BigDecimal(7933), "This replica features working kickstand, front suspension, gear-shift lever, footbrake lever", "1969 Harley Davidson Ultimate Chopper", "Motorcycles", "1:10", "Min Lin Diecast", (short)7933));
-//        products.add(new Product("S10_1473", new BigDecimal(783.47), new BigDecimal(8754), "This description description description", "1969 Harley Davidson Ultimate Chopper", "Motorcycles", "1:10", "Min Lin Diecast", (short)7863));
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Product> getAll(){
         return productRepository.findAll();
+    }
+
+    @RequestMapping(value = "/find/one/{id}", method = RequestMethod.GET)
+    public Optional<Product> findOneProduct(@PathVariable String id){
+        return productRepository.findById(id);
+    }
+
+    @RequestMapping(value = "/find/{productCode}", method = RequestMethod.GET)
+    public Product findByProductCode(@PathVariable String productCode){
+        return productRepository.findByProductCode(productCode);
     }
 
     @RequestMapping(value = "/affordable/{price}", method = RequestMethod.GET)
@@ -39,9 +48,25 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @RequestMapping(value = "/find/{productCode}", method = RequestMethod.GET)
-    public Product findByProductCode(@PathVariable String productCode){
-        return productRepository.findByProductCode(productCode);
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public List<Product> delete(@PathVariable String id){
+        productRepository.deleteById(id);
+        return productRepository.findAll();
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public List<Product> update(@RequestBody Product product){
+        Product findedProduct = productRepository.findByProductCode(product.getProductCode());
+        findedProduct.setBuyPrice(product.getBuyPrice());
+        findedProduct.setMsrp(product.getMsrp());
+        findedProduct.setProductDescription(product.getProductDescription());
+        findedProduct.setProductName(product.getProductName());
+        findedProduct.setProductLine(product.getProductLine());
+        findedProduct.setProductScale(product.getProductScale());
+        findedProduct.setProductVendor(product.getProductVendor());
+        findedProduct.setQuantityInStock(product.getQuantityInStock());
+        productRepository.save(findedProduct);
+        return productRepository.findAll();
     }
 
 }

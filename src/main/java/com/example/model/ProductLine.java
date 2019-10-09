@@ -1,14 +1,10 @@
 package com.example.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name="productlines")
@@ -23,17 +19,19 @@ public class ProductLine {
 
     @Lob
     @Column(name="image", length = Integer.MAX_VALUE)
-    private byte[] file;
+    private Byte[] file;
 
     //bi-directional many-to-one association to Product
-    @OneToMany(mappedBy="category", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @Fetch(FetchMode.SELECT)
+//    @OneToMany(mappedBy="category", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+//    @Fetch(FetchMode.SELECT)
+//    @BatchSize(size=1)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
 
     public ProductLine() {
     }
 
-    public ProductLine(String productLine, String htmlDescription, byte[] file) {
+    public ProductLine(String productLine, String htmlDescription, Byte[] file) {
         super();
         this.productLine = productLine;
         this.htmlDescription = htmlDescription;
@@ -56,21 +54,21 @@ public class ProductLine {
         this.htmlDescription = htmlDescription;
     }
 
-    public byte[] getFile() {
+    public Byte[] getFile() {
         return file;
     }
 
-    public void setFile(byte[] file) {
+    public void setFile(Byte[] file) {
         this.file = file;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
+//    public List<Product> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(List<Product> products) {
+//        this.products = products;
+//    }
 
     @Override
     public String toString() {

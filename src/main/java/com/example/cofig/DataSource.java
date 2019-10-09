@@ -33,7 +33,9 @@ public class DataSource {
         em.setJpaVendorAdapter(vendorAdapter);
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
-        properties.put("hibernate.show-sql", env.getProperty("jdbc.show-sql"));
+        properties.put("hibernate.show_sql", env.getProperty("jdbc.show_sql"));
+        properties.put("hibernate.format_sql", env.getProperty("jdbc.format_sql"));
+        properties.put("hibernate.use_sql_comments", env.getProperty("jdbc.use_sql_comments"));
         em.setJpaPropertyMap(properties);
         return em;
     }

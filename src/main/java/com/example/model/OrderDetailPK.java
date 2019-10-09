@@ -9,7 +9,7 @@ import java.util.Objects;
 public class OrderDetailPK implements Serializable {
 
     @Column(insertable=false, updatable=false)
-    private int orderNumber;
+    private Integer orderNumber;
 
     @Column(insertable=false, updatable=false)
     private String productCode;
@@ -17,11 +17,11 @@ public class OrderDetailPK implements Serializable {
     public OrderDetailPK() {
     }
 
-    public int getOrderNumber() {
+    public Integer getOrderNumber() {
         return this.orderNumber;
     }
 
-    public void setOrderNumber(int orderNumber) {
+    public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
     }
 
@@ -37,7 +37,7 @@ public class OrderDetailPK implements Serializable {
         if (this == o) return true;
         if (!(o instanceof OrderDetailPK)) return false;
         OrderDetailPK that = (OrderDetailPK) o;
-        return orderNumber == that.orderNumber &&
+        return Objects.equals(orderNumber, that.orderNumber) &&
                 Objects.equals(productCode, that.productCode);
     }
 

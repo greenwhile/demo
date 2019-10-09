@@ -9,17 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-@Transactional
 public interface ProductRepository extends JpaRepository<Product,String> {
 //    List<Product> findByCategory(String productCode/*, Pageable p*/);
     List<Product> findAll();
     @Query("select b from Product b where b.productCode = :productCode")
     Product findByProductCode(@Param("productCode") String productCode);
-//    Product findOne(String productCode);
-//    Product findByProductCode(String productCode);
-//    void delete(String id);
+    Optional<Product> findById(String id);
+    void deleteById(String id);
 //    void update(Product product);
+    @Query("update Product p set p.buyPrice = ?1, p.msrp = ?2, p.productDescription = ?3, p.productName = ?4, p.productLine = ?5, p.productScale = ?6, p.productVendor = ?7, p.quantityInStock = ?8 where p.productCode = ?9")
+    void update(BigDecimal buyPrice, BigDecimal msrp, String productDescription, String productName, String productLine, String productScale, String productVendor, Short quantityInStock);
     List<Product> findByBuyPriceLessThan(BigDecimal price);
 }

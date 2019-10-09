@@ -14,7 +14,7 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private int customerNumber;
+    private Integer customerNumber;
 
     private String addressLine1;
 
@@ -41,23 +41,27 @@ public class Customer {
     private Integer salesRepEmployeeNumber;
 
     //bi-directional many-to-one association to Employee
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="salesRepEmployeeNumber", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="salesRepEmployeeNumber", insertable=false, updatable=false)
+    @JoinColumn(name = "salesRepEmployeeNumber", insertable = false, updatable = false)
     private Employee employee;
 
     //bi-directional many-to-one association to Order
-    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+//    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
     //bi-directional many-to-one association to Payment
-    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+//    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Payment> payments;
 
     public Customer() {}
 
     public Customer(String addressLine1, String addressLine2, String city, String contactFirstName, String contactLastName,
                     String country, BigDecimal creditLimit, String customerName, String phone, String postalCode,
-                    int salesRepEmployeeNumber) {
+                    Integer salesRepEmployeeNumber) {
         super();
         this.customerNumber = ++customersCount;
         this.addressLine1 = addressLine1;
@@ -73,19 +77,15 @@ public class Customer {
         this.salesRepEmployeeNumber = salesRepEmployeeNumber;
     }
 
-    public static int getCustomersCount() {
+    public static Integer getCustomersCount() {
         return customersCount;
     }
 
-    public static void setCustomersCount(int customersCount) {
-        Customer.customersCount = customersCount;
-    }
-
-    public int getCustomerNumber() {
+    public Integer getCustomerNumber() {
         return customerNumber;
     }
 
-    public void setCustomerNumber(int customerNumber) {
+    public void setCustomerNumber(Integer customerNumber) {
         this.customerNumber = customerNumber;
     }
 
@@ -185,57 +185,29 @@ public class Customer {
         this.salesRepEmployeeNumber = salesRepEmployeeNumber;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
+//    public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//    }
+//
+//    public List<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    public List<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-        Customer customer = (Customer) o;
-        return customerNumber == customer.customerNumber &&
-                Objects.equals(addressLine1, customer.addressLine1) &&
-                Objects.equals(addressLine2, customer.addressLine2) &&
-                Objects.equals(city, customer.city) &&
-                Objects.equals(contactFirstName, customer.contactFirstName) &&
-                Objects.equals(contactLastName, customer.contactLastName) &&
-                Objects.equals(country, customer.country) &&
-                Objects.equals(creditLimit, customer.creditLimit) &&
-                Objects.equals(customerName, customer.customerName) &&
-                Objects.equals(phone, customer.phone) &&
-                Objects.equals(postalCode, customer.postalCode) &&
-                Objects.equals(state, customer.state) &&
-                Objects.equals(salesRepEmployeeNumber, customer.salesRepEmployeeNumber) &&
-                Objects.equals(employee, customer.employee) &&
-                Objects.equals(orders, customer.orders) &&
-                Objects.equals(payments, customer.payments);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(customerNumber, addressLine1, addressLine2, city, contactFirstName, contactLastName, country, creditLimit, customerName, phone, postalCode, state, salesRepEmployeeNumber, employee, orders, payments);
-    }
+//    public List<Payment> getPayments() {
+//        return payments;
+//    }
+//
+//    public void setPayments(List<Payment> payments) {
+//        this.payments = payments;
+//    }
 
     @Override
     public String toString() {
@@ -253,9 +225,6 @@ public class Customer {
                 ", postalCode='" + postalCode + '\'' +
                 ", state='" + state + '\'' +
                 ", salesRepEmployeeNumber=" + salesRepEmployeeNumber +
-                ", employee=" + employee +
-                ", orders=" + orders +
-                ", payments=" + payments +
                 '}';
     }
 

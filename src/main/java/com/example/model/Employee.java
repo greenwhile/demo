@@ -13,7 +13,7 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    private int employeeNumber;
+    private Integer employeeNumber;
 
     private String firstName;
 
@@ -30,18 +30,21 @@ public class Employee {
     private String jobTitle;
 
     //bi-directional many-to-one association to Customer
-    @OneToMany(mappedBy="employee", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+//    @OneToMany(mappedBy="employee", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Customer> customers;
-
-    //bi-directional many-to-one association to Office
+//
+//    //bi-directional many-to-one association to Office
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="officeCode", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="officeCode", insertable=false, updatable=false)
+    @JoinColumn(name = "officeCode", insertable = false, updatable = false)
     private Office office;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo,
+    public Employee(String firstName, String lastName, String extension, String email, String officeCode, Integer reportsTo,
                     String jobTitle) {
         super();
         this.employeeNumber = ++employeesCount;
@@ -53,19 +56,19 @@ public class Employee {
         this.jobTitle = jobTitle;
     }
 
-    public static int getEmployeesCount() {
+    public static Integer getEmployeesCount() {
         return employeesCount;
     }
 
-    public static void setEmployeesCount(int employeesCount) {
+    public static void setEmployeesCount(Integer employeesCount) {
         Employee.employeesCount = employeesCount;
     }
 
-    public int getEmployeeNumber() {
+    public Integer getEmployeeNumber() {
         return employeeNumber;
     }
 
-    public void setEmployeeNumber(int employeeNumber) {
+    public void setEmployeeNumber(Integer employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
 
@@ -125,43 +128,21 @@ public class Employee {
         this.jobTitle = jobTitle;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
-
-    public Office getOffice() {
-        return office;
-    }
-
-    public void setOffice(Office office) {
-        this.office = office;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Employee)) return false;
-        Employee employee = (Employee) o;
-        return employeeNumber == employee.employeeNumber &&
-                Objects.equals(firstName, employee.firstName) &&
-                Objects.equals(lastName, employee.lastName) &&
-                Objects.equals(extension, employee.extension) &&
-                Objects.equals(email, employee.email) &&
-                Objects.equals(officeCode, employee.officeCode) &&
-                Objects.equals(reportsTo, employee.reportsTo) &&
-                Objects.equals(jobTitle, employee.jobTitle) &&
-                Objects.equals(customers, employee.customers) &&
-                Objects.equals(office, employee.office);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle, customers, office);
-    }
+//    public List<Customer> getCustomers() {
+//        return customers;
+//    }
+//
+//    public void setCustomers(List<Customer> customers) {
+//        this.customers = customers;
+//    }
+//
+//    public Office getOffice() {
+//        return office;
+//    }
+//
+//    public void setOffice(Office office) {
+//        this.office = office;
+//    }
 
     @Override
     public String toString() {
@@ -174,8 +155,6 @@ public class Employee {
                 ", officeCode='" + officeCode + '\'' +
                 ", reportsTo=" + reportsTo +
                 ", jobTitle='" + jobTitle + '\'' +
-                ", customers=" + customers +
-                ", office=" + office +
                 '}';
     }
 }

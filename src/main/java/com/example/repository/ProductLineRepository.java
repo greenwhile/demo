@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public interface ProductLineRepository extends JpaRepository<ProductLine,String> {
     List<ProductLine> findAll();
 //    @Modifying

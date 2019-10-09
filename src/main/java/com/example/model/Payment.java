@@ -19,8 +19,10 @@ public class Payment {
     private Date paymentDate;
 
     //bi-directional many-to-one association to Customer
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="customerNumber", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="customerNumber", insertable=false, updatable=false)
+    @JoinColumn(name = "customerNumber", insertable = false, updatable = false)
     private Customer customer;
 
     public Payment() {
@@ -57,29 +59,13 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Payment)) return false;
-        Payment payment = (Payment) o;
-        return Objects.equals(paymentPK, payment.paymentPK) &&
-                Objects.equals(amount, payment.amount) &&
-                Objects.equals(paymentDate, payment.paymentDate) &&
-                Objects.equals(customer, payment.customer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(paymentPK, amount, paymentDate, customer);
-    }
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
     @Override
     public String toString() {
@@ -87,7 +73,6 @@ public class Payment {
                 "paymentPK=" + paymentPK +
                 ", amount=" + amount +
                 ", paymentDate=" + paymentDate +
-                ", customer=" + customer +
                 '}';
     }
 

@@ -29,7 +29,8 @@ public class Office {
     private String territory;
 
     //bi-directional many-to-one association to Employee
-    @OneToMany(mappedBy="office", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy="office", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Employee> employees;
 
     public Office() {
@@ -121,35 +122,13 @@ public class Office {
         this.territory = territory;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Office)) return false;
-        Office office = (Office) o;
-        return Objects.equals(officeCode, office.officeCode) &&
-                Objects.equals(addressLine1, office.addressLine1) &&
-                Objects.equals(addressLine2, office.addressLine2) &&
-                Objects.equals(city, office.city) &&
-                Objects.equals(country, office.country) &&
-                Objects.equals(phone, office.phone) &&
-                Objects.equals(postalCode, office.postalCode) &&
-                Objects.equals(state, office.state) &&
-                Objects.equals(territory, office.territory) &&
-                Objects.equals(employees, office.employees);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(officeCode, addressLine1, addressLine2, city, country, phone, postalCode, state, territory, employees);
-    }
+//    public List<Employee> getEmployees() {
+//        return employees;
+//    }
+//
+//    public void setEmployees(List<Employee> employees) {
+//        this.employees = employees;
+//    }
 
     @Override
     public String toString() {
@@ -163,7 +142,6 @@ public class Office {
                 ", postalCode='" + postalCode + '\'' +
                 ", state='" + state + '\'' +
                 ", territory='" + territory + '\'' +
-                ", employees=" + employees +
                 '}';
     }
 

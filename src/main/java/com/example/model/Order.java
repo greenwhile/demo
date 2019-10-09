@@ -17,7 +17,7 @@ public class Order {
 
     @Id
     @GeneratedValue
-    private int orderNumber;
+    private Integer orderNumber;
 
     @Lob
     @Type(type = "org.hibernate.type.MaterializedClobType")
@@ -35,22 +35,25 @@ public class Order {
 
     private String status;
 
-    private int customerNumber;
+    private Integer customerNumber;
 
     //bi-directional many-to-one association to Orderdetail
-    @OneToMany(mappedBy="order")
+//    @OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetail> orderdetails;
-
-    //bi-directional many-to-one association to Customer
+//
+//    //bi-directional many-to-one association to Customer
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="customerNumber", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="customerNumber", insertable=false, updatable=false)
+    @JoinColumn(name = "customerNumber", insertable = false, updatable = false)
     private Customer customer;
 
     public Order() {
     }
 
     public Order(String comments, Date orderDate, Date requiredDate, Date shippedDate, String status,
-                 int customerNumber) {
+                 Integer customerNumber) {
         super();
         this.orderNumber = ++ordersCount;
         this.comments = comments;
@@ -61,19 +64,19 @@ public class Order {
         this.customerNumber = customerNumber;
     }
 
-    public static int getOrdersCount() {
+    public static Integer getOrdersCount() {
         return ordersCount;
     }
 
-    public static void setOrdersCount(int ordersCount) {
+    public static void setOrdersCount(Integer ordersCount) {
         Order.ordersCount = ordersCount;
     }
 
-    public int getOrderNumber() {
+    public Integer getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(int orderNumber) {
+    public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
     }
 
@@ -117,50 +120,29 @@ public class Order {
         this.status = status;
     }
 
-    public int getCustomerNumber() {
+    public Integer getCustomerNumber() {
         return customerNumber;
     }
 
-    public void setCustomerNumber(int customerNumber) {
+    public void setCustomerNumber(Integer customerNumber) {
         this.customerNumber = customerNumber;
     }
 
-    public List<OrderDetail> getOrderdetails() {
-        return orderdetails;
-    }
-
-    public void setOrderdetails(List<OrderDetail> orderdetails) {
-        this.orderdetails = orderdetails;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Order)) return false;
-        Order order = (Order) o;
-        return orderNumber == order.orderNumber &&
-                customerNumber == order.customerNumber &&
-                Objects.equals(comments, order.comments) &&
-                Objects.equals(orderDate, order.orderDate) &&
-                Objects.equals(requiredDate, order.requiredDate) &&
-                Objects.equals(shippedDate, order.shippedDate) &&
-                Objects.equals(status, order.status) &&
-                Objects.equals(orderdetails, order.orderdetails) &&
-                Objects.equals(customer, order.customer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderNumber, comments, orderDate, requiredDate, shippedDate, status, customerNumber, orderdetails, customer);
-    }
+//    public List<OrderDetail> getOrderdetails() {
+//        return orderdetails;
+//    }
+//
+//    public void setOrderdetails(List<OrderDetail> orderdetails) {
+//        this.orderdetails = orderdetails;
+//    }
+//
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
     @Override
     public String toString() {
@@ -172,8 +154,6 @@ public class Order {
                 ", shippedDate=" + shippedDate +
                 ", status='" + status + '\'' +
                 ", customerNumber=" + customerNumber +
-                ", orderdetails=" + orderdetails +
-                ", customer=" + customer +
                 '}';
     }
 

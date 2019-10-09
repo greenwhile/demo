@@ -1,5 +1,6 @@
 package com.example.model;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -21,22 +22,26 @@ public class Product {
     private String productLine;
     private String productScale;
     private String productVendor;
-    private short quantityInStock;
+    private Short quantityInStock;
 
     //bi-directional many-to-one association to Orderdetail
-    @OneToMany(mappedBy="product", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @Fetch(FetchMode.SELECT)
+//    @OneToMany(mappedBy="product", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+//    @Fetch(FetchMode.SELECT)
+//    @BatchSize(size=2)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetail> orderdetails;
 
     //bi-directional many-to-one association to Productline
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="productLine", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="productLine", insertable=false, updatable=false)
+    @JoinColumn(name = "productLine", insertable = false, updatable = false)
     private ProductLine category;
 
     public Product() {
     }
 
-    public Product(String productCode, BigDecimal buyPrice, BigDecimal msrp, String productDescription, String productName, String productLine, String productScale, String productVendor, short quantityInStock) {
+    public Product(String productCode, BigDecimal buyPrice, BigDecimal msrp, String productDescription, String productName, String productLine, String productScale, String productVendor, Short quantityInStock) {
         this.productCode = productCode;
         this.buyPrice = buyPrice;
         this.msrp = msrp;
@@ -112,52 +117,21 @@ public class Product {
         this.productVendor = productVendor;
     }
 
-    public short getQuantityInStock() {
+    public Short getQuantityInStock() {
         return quantityInStock;
     }
 
-    public void setQuantityInStock(short quantityInStock) {
+    public void setQuantityInStock(Short quantityInStock) {
         this.quantityInStock = quantityInStock;
     }
 
-    public List<OrderDetail> getOrderdetails() {
-        return orderdetails;
-    }
-
-    public void setOrderdetails(List<OrderDetail> orderdetails) {
-        this.orderdetails = orderdetails;
-    }
-
-    public ProductLine getCategory() {
-        return category;
-    }
-
-    public void setCategory(ProductLine category) {
-        this.category = category;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        return quantityInStock == product.quantityInStock &&
-                Objects.equals(productCode, product.productCode) &&
-                Objects.equals(buyPrice, product.buyPrice) &&
-                Objects.equals(msrp, product.msrp) &&
-                Objects.equals(productDescription, product.productDescription) &&
-                Objects.equals(productName, product.productName) &&
-                Objects.equals(productLine, product.productLine) &&
-                Objects.equals(productScale, product.productScale) &&
-                Objects.equals(productVendor, product.productVendor) &&
-                Objects.equals(orderdetails, product.orderdetails) &&
-                Objects.equals(category, product.category);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(productCode, buyPrice, msrp, productDescription, productName, productLine, productScale, productVendor, quantityInStock, orderdetails, category);
-    }
+//    public List<OrderDetail> getOrderdetails() {
+//        return orderdetails;
+//    }
+//
+//    public void setOrderdetails(List<OrderDetail> orderdetails) {
+//        this.orderdetails = orderdetails;
+//    }
 
     @Override
     public String toString() {
@@ -171,7 +145,6 @@ public class Product {
                 ", productScale='" + productScale + '\'' +
                 ", productVendor='" + productVendor + '\'' +
                 ", quantityInStock=" + quantityInStock +
-                ", orderdetails=" + orderdetails +
                 ", category=" + category +
                 '}';
     }

@@ -15,26 +15,30 @@ public class OrderDetail {
     @EmbeddedId
     private OrderDetailPK orderDetailPK;
 
-    private int quantityOrdered;
+    private Integer quantityOrdered;
 
     private BigDecimal priceEach;
 
-    private short orderLineNumber;
+    private Short orderLineNumber;
 
     //bi-directional many-to-one association to Order
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="orderNumber", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="orderNumber", insertable=false, updatable=false)
+    @JoinColumn(name = "orderNumber", insertable = false, updatable = false)
     private Order order;
-
-    //bi-directional many-to-one association to Product
+//
+//    //bi-directional many-to-one association to Product
+//    @ManyToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="productCode", insertable=false, updatable=false)
     @ManyToOne
-    @JoinColumn(name="productCode", insertable=false, updatable=false)
+    @JoinColumn(name = "productCode", insertable = false, updatable = false)
     private Product product;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(OrderDetailPK orderDetailPK, short orderLineNumber, BigDecimal priceEach, int quantityOrdered) {
+    public OrderDetail(OrderDetailPK orderDetailPK, Short orderLineNumber, BigDecimal priceEach, Integer quantityOrdered) {
         super();
         this.orderDetailPK = orderDetailPK;
         this.orderLineNumber = orderLineNumber;
@@ -50,11 +54,11 @@ public class OrderDetail {
         this.orderDetailPK = orderDetailPK;
     }
 
-    public int getQuantityOrdered() {
+    public Integer getQuantityOrdered() {
         return quantityOrdered;
     }
 
-    public void setQuantityOrdered(int quantityOrdered) {
+    public void setQuantityOrdered(Integer quantityOrdered) {
         this.quantityOrdered = quantityOrdered;
     }
 
@@ -66,47 +70,29 @@ public class OrderDetail {
         this.priceEach = priceEach;
     }
 
-    public short getOrderLineNumber() {
+    public Short getOrderLineNumber() {
         return orderLineNumber;
     }
 
-    public void setOrderLineNumber(short orderLineNumber) {
+    public void setOrderLineNumber(Short orderLineNumber) {
         this.orderLineNumber = orderLineNumber;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof OrderDetail)) return false;
-        OrderDetail that = (OrderDetail) o;
-        return quantityOrdered == that.quantityOrdered &&
-                orderLineNumber == that.orderLineNumber &&
-                Objects.equals(orderDetailPK, that.orderDetailPK) &&
-                Objects.equals(priceEach, that.priceEach) &&
-                Objects.equals(order, that.order) &&
-                Objects.equals(product, that.product);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderDetailPK, quantityOrdered, priceEach, orderLineNumber, order, product);
-    }
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
+//
+//    public Product getProduct() {
+//        return product;
+//    }
+//
+//    public void setProduct(Product product) {
+//        this.product = product;
+//    }
 
     @Override
     public String toString() {
@@ -115,8 +101,6 @@ public class OrderDetail {
                 ", quantityOrdered=" + quantityOrdered +
                 ", priceEach=" + priceEach +
                 ", orderLineNumber=" + orderLineNumber +
-                ", order=" + order +
-                ", product=" + product +
                 '}';
     }
 

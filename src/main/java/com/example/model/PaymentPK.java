@@ -3,14 +3,13 @@ package com.example.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class PaymentPK implements Serializable {
-    //default serial version id, required for serializable classes.
-    private static final long serialVersionUID = 1L;
 
     @Column(name="customerNumber", insertable=false, updatable=false)
-    private int customerNumber;
+    private Integer customerNumber;
 
     @Column(name="checkNumber", insertable=false, updatable=false)
     private String checkNumber;
@@ -24,7 +23,7 @@ public class PaymentPK implements Serializable {
         this.checkNumber = checkNumber;
     }
 
-    public int getCustomerNumber() {
+    public Integer getCustomerNumber() {
         return this.customerNumber;
     }
     public String getCheckNumber() {
@@ -34,29 +33,21 @@ public class PaymentPK implements Serializable {
         this.checkNumber = checkNumber;
     }
 
-    public void setCustomerNumber(int customerNumber) {
+    public void setCustomerNumber(Integer customerNumber) {
         this.customerNumber = customerNumber;
     }
 
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (!(other instanceof PaymentPK)) {
-            return false;
-        }
-        PaymentPK castOther = (PaymentPK)other;
-        return
-                (this.customerNumber == castOther.customerNumber)
-                        && this.checkNumber.equals(castOther.checkNumber);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PaymentPK)) return false;
+        PaymentPK paymentPK = (PaymentPK) o;
+        return Objects.equals(customerNumber, paymentPK.customerNumber) &&
+                Objects.equals(checkNumber, paymentPK.checkNumber);
     }
 
+    @Override
     public int hashCode() {
-        final int prime = 31;
-        int hash = 17;
-        hash = hash * prime + this.customerNumber;
-        hash = hash * prime + this.checkNumber.hashCode();
-
-        return hash;
+        return Objects.hash(customerNumber, checkNumber);
     }
 }
