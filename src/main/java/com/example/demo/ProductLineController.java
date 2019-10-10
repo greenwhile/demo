@@ -26,4 +26,39 @@ public class ProductLineController {
         return productLineRepository.findAll();
     }
 
+    @RequestMapping(value = "/innerjoin/products", method = RequestMethod.GET)
+    List<Object[]> fetchProductLinesInnerJoinProducts(){
+        return productLineRepository.fetchProductLinesInnerJoinProducts();
+    }
+
+    @RequestMapping(value = "/innerjoin/orderdetails", method = RequestMethod.GET)
+    List<Object[]> fetchProductLinesInnerJoinOrderDetails(){
+        return productLineRepository.fetchProductLinesInnerJoinOrderDetails();
+    }
+
+    @RequestMapping(value = "/innerjoin/orders", method = RequestMethod.GET)
+    List<Object[]> fetchProductLinesInnerJoinOrders(){
+        return productLineRepository.fetchProductLinesInnerJoinOrders();
+    }
+
+    @RequestMapping(value = "/innerjoin/customers", method = RequestMethod.GET)
+    List<Object[]> fetchProductLinesInnerJoinCustomers(){
+        return productLineRepository.fetchProductLinesInnerJoinCustomers();
+    }
+
+//    @RequestMapping(value = "/innerjoin/payments", method = RequestMethod.GET)
+//    List<Object[]> fetchProductLinesInnerJoinPayments(){
+//        return productLineRepository.fetchProductLinesInnerJoinPayments();
+//    }
+
+    @RequestMapping(value = "/innerjoin/employees", method = RequestMethod.GET)
+    List<Object[]> fetchProductLinesInnerJoinEmployees(){
+        return productLineRepository.fetchProductLinesInnerJoinEmployees();
+    }
+
+    @RequestMapping(value = "/innerjoin/offices", method = RequestMethod.GET)
+    List<Object[]> fetchProductLinesInnerJoinOffices(){
+        return productLineRepository.fetchProductLinesInnerJoinOffices();
+    }
+
 }
