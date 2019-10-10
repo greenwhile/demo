@@ -11,50 +11,30 @@ import java.util.Objects;
 public class Customer {
 
     private static int customersCount;
-
     @Id
     @GeneratedValue
     private Integer customerNumber;
-
     private String addressLine1;
-
     private String addressLine2;
-
     private String city;
-
     private String contactFirstName;
-
     private String contactLastName;
-
     private String country;
-
     private BigDecimal creditLimit;
-
     private String customerName;
-
     private String phone;
-
     private String postalCode;
-
     private String state;
-
     private Integer salesRepEmployeeNumber;
 
-    //bi-directional many-to-one association to Employee
-//    @ManyToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="salesRepEmployeeNumber", insertable=false, updatable=false)
     @ManyToOne
     @JoinColumn(name = "salesRepEmployeeNumber", insertable = false, updatable = false)
     private Employee employee;
 
-    //bi-directional many-to-one association to Order
-//    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order_customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
-    //bi-directional many-to-one association to Payment
-//    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "payment_customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Payment> payments;
 
     public Customer() {}
@@ -184,30 +164,6 @@ public class Customer {
     public void setSalesRepEmployeeNumber(Integer salesRepEmployeeNumber) {
         this.salesRepEmployeeNumber = salesRepEmployeeNumber;
     }
-
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
-//
-//    public List<Order> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(List<Order> orders) {
-//        this.orders = orders;
-//    }
-
-//    public List<Payment> getPayments() {
-//        return payments;
-//    }
-//
-//    public void setPayments(List<Payment> payments) {
-//        this.payments = payments;
-//    }
 
     @Override
     public String toString() {

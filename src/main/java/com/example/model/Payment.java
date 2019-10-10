@@ -12,18 +12,12 @@ public class Payment {
 
     @EmbeddedId
     private PaymentPK paymentPK;
-
     private BigDecimal amount;
-
     @Temporal(TemporalType.DATE)
     private Date paymentDate;
-
-    //bi-directional many-to-one association to Customer
-//    @ManyToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="customerNumber", insertable=false, updatable=false)
     @ManyToOne
     @JoinColumn(name = "customerNumber", insertable = false, updatable = false)
-    private Customer customer;
+    private Customer payment_customer;
 
     public Payment() {
     }
@@ -58,14 +52,6 @@ public class Payment {
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
     }
-
-//    public Customer getCustomer() {
-//        return customer;
-//    }
-//
-//    public void setCustomer(Customer customer) {
-//        this.customer = customer;
-//    }
 
     @Override
     public String toString() {

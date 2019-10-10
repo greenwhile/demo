@@ -48,7 +48,7 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public List<Product> delete(@PathVariable String id){
         productRepository.deleteById(id);
         return productRepository.findAll();
@@ -67,6 +67,23 @@ public class ProductController {
         findedProduct.setQuantityInStock(product.getQuantityInStock());
         productRepository.save(findedProduct);
         return productRepository.findAll();
+    }
+
+    @RequestMapping(value = "/find/price/quantity", method = RequestMethod.GET)
+    public List<Product> findByBuyPriceAndQuantityInStock(Double buyPrice, String quantityInStock){
+        BigDecimal price = BigDecimal.valueOf(new Double(buyPrice));
+        Short quantity = Short.valueOf(new String(quantityInStock));
+        return productRepository.findByBuyPriceAndQuantityInStock(price, quantity);
+    }
+
+    @RequestMapping(value = "/find/name", method = RequestMethod.GET)
+    public List<Product> findByProductNameEquals(String productName){
+        return productRepository.findByProductNameEquals(new String(productName));
+    }
+
+    @RequestMapping(value = "/find/line", method = RequestMethod.GET)
+    public List<Product> findByProductLine(String productLine){
+        return productRepository.findByProductLine(new String(productLine));
     }
 
 }
